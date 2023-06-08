@@ -9,20 +9,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class ParseExcelRowsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private array $rows;
+    private array  $rows;
+    private string $uniqueKey;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(array $rows)
+    public function __construct(array $rows, string $uniqueKey)
     {
-        $this->rows = $rows;
+        $this->rows      = $rows;
+        $this->uniqueKey = $uniqueKey;
     }
 
     /**
@@ -30,19 +31,14 @@ class ParseExcelRowsJob implements ShouldQueue
      */
     public function handle()
     {
-        foreach ($this->rows as $key => $row) {
-            if ($row[0] === "id") continue;
+        foreach ($this->rows as $row) {
+            if (!isset($row[0]) || $row[0] === "id") continue;
 
-            try {
-                (new CreateRow())->handle([
-                    "id"   => $row[0],
-                    "name" => $row[1],
-                    "date" => $row[2],
-                ]);
-            } catch (\Exception $exception) {
-                Log::debug(print_r($key, true));
-                Log::debug(print_r($row, true));
-            }
+            (new CreateRow())->handle([
+                "id"   => $row[0],
+                "name" => $row[1] ?? null,
+                "date" => $row[2] ?? null,
+            ]);
         }
     }
 }

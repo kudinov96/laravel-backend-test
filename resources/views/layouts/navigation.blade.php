@@ -16,6 +16,9 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('excel.index')" :active="request()->routeIs('excel.index')">
+                        {{ __('Excel') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('excelUpload.index')" :active="request()->routeIs('excelUpload.index')">
                         {{ __('Excel Upload') }}
                     </x-nav-link>
                 </div>
@@ -74,6 +77,9 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('excel.index')" :active="request()->routeIs('excel.index')">
+                {{ __('Excel') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('excelUpload.index')" :active="request()->routeIs('excelUpload.index')">
                 {{ __('Excel Upload') }}
             </x-responsive-nav-link>
         </div>

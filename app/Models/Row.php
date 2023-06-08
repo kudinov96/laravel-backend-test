@@ -14,4 +14,8 @@ class Row extends Model
     protected $table   = "rows";
 
     public $timestamps = false;
+
+    protected $casts = [
+        "date" => "date",
+    ];
 }

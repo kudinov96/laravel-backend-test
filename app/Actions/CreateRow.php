@@ -10,15 +10,10 @@ class CreateRow
     public function handle(array $data)
     {
         $item       = new Row();
-        $item->id   = $data["id"];
-        $item->name = $data["name"];
+        $item->id   = $data["id"] ?? null;
+        $item->name = $data["name"] ?? null;
+        $item->date = Carbon::createFromFormat("j.n.y", $data["date"]);
 
-        $date = Carbon::createFromFormat("d.m.y", $data["date"]);
-        if (!$date) {
-            $date = Carbon::createFromFormat("j.n.y", $data["date"]);
-        }
-
-        $item->date = $date;
         $item->save();
 
         return $item;

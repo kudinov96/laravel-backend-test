@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('rows', function (Blueprint $table) {
             $table->unsignedBigInteger("id");
-            $table->string("name");
-            $table->date("date");
+            $table->string("name")->nullable();
+            $table->date("date")->nullable();
         });
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ExcelUploadController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get("/upload-excel", [ExcelUploadController::class, "index"])->name("excel.index");
-    Route::post("/upload-excel", [ExcelUploadController::class, "upload"])->name("excel.upload");
+    Route::get("/excel-upload", [ExcelUploadController::class, "index"])->name("excelUpload.index");
+    Route::post("/excel-upload", [ExcelUploadController::class, "upload"])->name("excelUpload.upload");
+
+    Route::get("/excel", [ExcelController::class, "index"])->name("excel.index");
 });
 
 require __DIR__.'/auth.php';
